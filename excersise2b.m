@@ -19,7 +19,7 @@ for i = 1:nx
         psib(i, j) = 0;
         for n = 0:nv
             % Discrete vortex co-ordinates
-            xc = xc0 + delta*n/100;
+            xc = xc0 + delta*n/100 + delta/(nv*2);
             yc = yc0;
             % Separate influence coefficients in terms of start and end sheet strength
             psia(i,j) = psia(i, j) + psipv(xc,yc,gamma_a*delta*(1-n)/(nv^2),xm(i,j),ym(i,j));
