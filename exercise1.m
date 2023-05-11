@@ -1,15 +1,12 @@
+% Streamfunction of single line vortex
+
 clear;
 close all;
 
-xmin = -2.5;
-xmax = 2.5;
-ymin = -2.5;
-ymax = 2.5;
-xc = 0.75;
-yc = 0.50;
-Gamma = 3.0;
-nx = 51;
-ny = 41;
+xmin = -2.5; xmax = 2.5; ymin = -2.5; ymax = 2.5; % Domain
+xc = 0.75; yc = 0.50; % Line vortex co-ordinates
+Gamma = 3.0; % Line vortex strength
+nx = 51; ny = 41; % Domain discretisation
 
 for i = 1:nx
     for j = 1:ny
@@ -19,5 +16,6 @@ for i = 1:nx
     end
 end
 
+% Streamfunction contours (streamlines)
 c = -0.4:0.2:1.2;
 contour(xm, ym, psi, c);

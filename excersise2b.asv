@@ -1,29 +1,22 @@
 clear;
 close all;
 
-xmin = -2.5;
-xmax = 2.5;
-ymin = -2.5;
-ymax = 2.5;
-xc = 0.75;
-yc = 0.50;
-Gamma = 3.0;
-nx = 51;
-ny = 41;
-ga = 1;
-gb = 1;
+% Domain
+xmin = -2.5, xmax = 2.5;
+ymin = -2.5, ymax = 2.5;
+delta = 1.5; % Vortex sheet length
+nx = 51, ny = 41; 
+gamma_a = 1, gamma_b = 1;
 
 for i = 1:nx
     for j = 1:ny
         xm(i,j) = xmin + (i-1)*(xmax-xmin)/(nx-1);
         ym(i,j) = ymin + (j-1)*(ymax-ymin)/(ny-1);
-
-
         for n = 0:100
             Gamma = ga*n/100;
             xc = del*n/100;
-            psia(i,j) = psia(i, j) + psipv(xc,yc,ga*(1-n)/100,xm(i,j),ym(i,j));
-            psib(i,j) = psib(i, j) + psipv(xc,yc,gb*n/100,xm(i,j),ym(i,j));
+            psia(i,j) = psia(i, j) + psipv(xc,yc,gamma_a*(1-n)/100,xm(i,j),ym(i,j));
+            psib(i,j) = psib(i, j) + psipv(xc,yc,gamma_b*n/100,xm(i,j),ym(i,j));
     end
 end
 
