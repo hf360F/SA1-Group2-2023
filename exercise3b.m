@@ -12,7 +12,7 @@ nx = 51; ny = 41; % Discretisation
 nv = 100; % Discretisation
 gamma_a = 1; gamma_b = 1; % Start and end vortex sheet strength
 xa = 4.1; ya = 1.3; xb = 2.2; yb = 2.9;
-delta = ((xb - xa)^2 + (yb - ya))^(1/2);
+delta = ((xb - xa)^2 + (yb - ya)^2)^(1/2);
 
 for i = 1:nx
     for j = 1:ny
