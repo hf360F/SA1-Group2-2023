@@ -8,7 +8,7 @@ xmin = -2.5; xmax = 2.5; ymin = -2.5; ymax = 2.5; % Domain
 delta = 1.5; % Vortex sheet length
 nx = 51; ny = 41; nv = 100; % Discretisation of domain and vortex sheet
 gamma_a = 1; gamma_b = 1; % Start and end vortex sheet strength
-xc0 = 0; yc0 = 0; % Co-ordinates of left hand edge of vortex sheet
+xa = 0; ya = 0; % Co-ordinates of left hand edge of vortex sheet
 
 for i = 1:nx
     for j = 1:ny
@@ -19,10 +19,10 @@ for i = 1:nx
         psib(i, j) = 0;
         for n = 0:nv
             % Discrete vortex co-ordinates
-            xc = xc0 + delta*n/100 + delta/(nv*2);
-            yc = yc0;
+            xc = xa + delta*n/nv + delta/(nv*2);
+            yc = ya;
             % Separate influence coefficients in terms of start and end sheet strength
-            psia(i,j) = psia(i, j) + psipv(xc,yc,gamma_a*delta*(1-n)/(nv^2),xm(i,j),ym(i,j));
+            psia(i,j) = psia(i, j) + psipv(xc,yc,gamma_a*delta*(1-(n/nv))/nv,xm(i,j),ym(i,j));
             psib(i,j) = psib(i, j) + psipv(xc,yc,gamma_b*delta*n/(nv^2),xm(i,j),ym(i,j));
         end
     end
