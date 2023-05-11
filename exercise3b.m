@@ -1,14 +1,18 @@
-% Approximation of vortex sheet with linearly varying
-% sheet strength as a sum of discrete line vortices.
+% Vortex sheets with aribtrary position and angle.
+% Numerical solution.
 
 clear;
 close all;
 
-xmin = -2.5; xmax = 2.5; ymin = -2.5; ymax = 2.5; % Domain
-delta = 1.5; % Vortex sheet length
-nx = 51; ny = 41; nv = 100; % Discretisation of domain and vortex sheet
+% Domain
+xmin = 0; xmax = 5; ymin = 0; ymax = 4;
+nx = 51; ny = 41; % Discretisation
+
+% Vortex sheet
+nv = 100; % Discretisation
 gamma_a = 1; gamma_b = 1; % Start and end vortex sheet strength
-xa = 0; ya = 0; % Co-ordinates of left hand edge of vortex sheet
+xa = 4.1; ya = 1.3; xb = 2.2; yb = 2.9;
+delta = ((xb - xa)^2 + (yb - ya))^(1/2);
 
 for i = 1:nx
     for j = 1:ny
@@ -19,10 +23,10 @@ for i = 1:nx
         psib(i, j) = 0;
         for n = 0:nv
             % Discrete vortex co-ordinates
-            xc = xa + delta*n/nv + delta/(nv*2);
-            yc = ya;
+            xc = xa + (xb-xa)*n/100 + (xb-xa)/(nv*2);
+            yc = ya + (yb-ya)*n/100 + (yb-ya)/(nv*2);
             % Separate influence coefficients in terms of start and end sheet strength
-            psia(i,j) = psia(i, j) + psipv(xc,yc,gamma_a*delta*(1-(n/nv))/nv,xm(i,j),ym(i,j));
+            psia(i,j) = psia(i, j) + psipv(xc,yc,gamma_a*delta*(1-(n/nv)/nv,xm(i,j),ym(i,j));
             psib(i,j) = psib(i, j) + psipv(xc,yc,gamma_b*delta*n/(nv^2),xm(i,j),ym(i,j));
         end
     end
@@ -34,4 +38,3 @@ contour(xm, ym, psia, c);
 
 figure(2);
 contour(xm, ym, psib, c);
-
