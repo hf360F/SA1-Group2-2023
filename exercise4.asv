@@ -21,11 +21,11 @@ for i = 1:nx
         ym(i,j) = ymin + (j-1)*(ymax-ymin)/(ny-1);
         % Contribution of free-stream to streamfunction
         psi(i, j) = ym(i, j);
-        for n = 1:np
+        for n = 0:np
             % Inf. coeffs. due to panel between i and i+1'th coordinate pairs
-            [infa, infb] = panelinf(xs(n), ys(n), xs(n+1), ys(n+1), xm(i,j), ym(i,j));
+            [infa, infb] = panelinf(xs(i), ys(i), xs(i+1), ys(i+1), xm(i,j), ym(i,j));
             % Contribution of this panel to streamfunction
-            psi(i,j) = psi(i, j) + infa*gamma(n) + infb*gamma(n+1);
+            psi(i,j) = psi(i, j) + infa*gamma(i) + infb*gamma(i+1)*;
         end
     end
 end

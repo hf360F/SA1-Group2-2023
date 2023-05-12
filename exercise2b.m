@@ -22,8 +22,8 @@ for i = 1:nx
             xc = xa + delta*n/nv + delta/(nv*2);
             yc = ya;
             % Separate influence coefficients in terms of start and end sheet strength
-            psia(i,j) = psia(i, j) + psipv(xc,yc,gamma_a*delta*(1-(n/nv))/nv,xm(i,j),ym(i,j));
-            psib(i,j) = psib(i, j) + psipv(xc,yc,gamma_b*delta*n/(nv^2),xm(i,j),ym(i,j));
+            psia(i, j) = psia(i, j) + psipv(xc,yc,gamma_a*delta*(1-(n/nv))/nv,xm(i,j),ym(i,j));
+            psib(i, j) = psib(i, j) + psipv(xc,yc,gamma_b*delta*n/(nv^2),xm(i,j),ym(i,j));
         end
     end
 end
