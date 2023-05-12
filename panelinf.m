@@ -1,4 +1,6 @@
 function [infa infb] = panelinf(xa, ya, xb, yb, x, y)
+% Influence coefficients of a general vortex panel with edges at (xa, ya)
+% and (xb, yb), on a point (x, y)
 
 % Co-ordinates relative to first edge of vortex sheet
 r = [x - xa, y - ya];
