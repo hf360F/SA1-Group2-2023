@@ -41,6 +41,7 @@ end
 c = -1.75:0.25:1.75;
 contour(xm, ym, psi, c);
 hold on
+axis("equal")
 plot(xs, ys)
 hold off
 

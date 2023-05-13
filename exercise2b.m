@@ -31,6 +31,8 @@ end
 % Plot contours of influence coefficients
 c = -0.15:0.05:0.15;
 contour(xm, ym, psia, c);
+axis("equal")
 
 figure(2);
 contour(xm, ym, psib, c);
+axis("equal")

@@ -33,6 +33,7 @@ end
 % Plot contours of influence coefficients
 c = -1.75:0.25:1.75;
 contour(xm, ym, psi, c);
+axis("equal")
 hold on
 plot(xs, ys)
 hold off
