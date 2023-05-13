@@ -4,7 +4,7 @@ function rhsmat = build_rhs(xs, ys, alpha)
 % streamfunction contributions from each panel needed to enforce no
 % through flow at each panel.
 
-np = length(xs - 1);
+np = length(xs) - 1;
 
 rhsmat = zeros(np+1, 1);
 
@@ -12,6 +12,6 @@ for i = 1:(np-1)
     rhsmat(i) = (ys(i) - ys(i+1))*cos(alpha) - (xs(i) - xs(i+1))*sin(alpha);
 end
 
-rhsmat = rhsmat(2:np-1);
+rhsmat = rhsmat(1:np-1);
 
 end
