@@ -6,12 +6,12 @@ function rhsmat = build_rhs(xs, ys, alpha)
 
 np = length(xs - 1);
 
-rhsmat = zeros(np, 1);
+rhsmat = zeros(np+1, 1);
 
-rhsmat(1) = 0;
-
-for i = 2:(np-1)
+for i = 1:(np-1)
     rhsmat(i) = (ys(i) - ys(i+1))*cos(alpha) - (xs(i) - xs(i+1))*sin(alpha);
 end
+
+rhsmat = rhsmat(2:np-1);
 
 end

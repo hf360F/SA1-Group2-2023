@@ -4,14 +4,14 @@ clear;
 close all;
 
 % Domain
-xmin = -2.5; xmax = 2.5; ymin = -2; ymax = 2;
-nx = 101; ny = 81; % Discretisation
+xmin = -5; xmax = 5; ymin = -4; ymax = 4;
+nx = 201; ny = 161; % Discretisation
 
 % Cylinder
-np = 1000; % Panel discretisation
+np = 500; % Panel discretisation
 theta = (0:np)*2*pi/np; % Angles
 xs = cos(theta); ys = sin(theta); % Points on unit circle 
-alpha = 0;
+alpha = pi/20;
 
 A = build_lhs(xs, ys);
 b = build_rhs(xs, ys, alpha);
@@ -19,9 +19,6 @@ b = build_rhs(xs, ys, alpha);
 gamma1 = A\b;
 
 gam = vertcat(vertcat(0, gamma1), 0);
-
-delta = ((xs(2) - xs(1))^2 + (ys(2) - ys(1))^2)^(1/2);
-
 
 for i = 1:nx
     for j = 1:ny
@@ -44,11 +41,6 @@ contour(xm, ym, psi, c);
 hold on
 plot(xs, ys)
 hold off
-    
-totalCirc = 0;
-for n = 1:(np-1)
-    gamAvg = gam(n)+gam(n+1)/2;
-    totalCirc = totalCirc + gamAvg * delta;
-end
 
-totalCirc
+for n = 1:(np-1)
+    gam(n)+gam(n+1)

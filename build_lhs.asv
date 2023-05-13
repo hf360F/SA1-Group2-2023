@@ -31,6 +31,6 @@ for i = 1:(np-1)
     end
 end
 
-lhsmat = lhsmat(1:np-1, 2:np);
+lhsmat 
 
 end
