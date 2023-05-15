@@ -8,7 +8,7 @@ np = length(xs) - 1;
 
 rhsmat = zeros(np+1, 1);
 
-for i = 1:(np-1)%%%%
+for i = 1:(np-1)
     rhsmat(i+1) = (ys(i) - ys(i+1))*cos(alpha) - (xs(i) - xs(i+1))*sin(alpha);
 end
 
