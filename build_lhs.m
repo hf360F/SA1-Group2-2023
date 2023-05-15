@@ -8,26 +8,17 @@ np = length(xs) - 1;
 psip = zeros(np, np+1);
 
 for  i = 1:(np)
-    for j = 1:(np+1)
-        if j < (np+1)
-            [infa, infb] = panelinf(xs(j), ys(j), xs(j+1), ys(j+1), xs(i), ys(i));
-            psip(i, j) = psip(i, j) + infa;
-            psip(i, j+1) = infb;
-         elseif j == np+1
-             [infa, infb] = panelinf(xs(j-1), ys(j-1), xs(j), ys(j), xs(i), ys(i));
-            psip(i, j) = infb;
-        end
+    for j = 1:(np)
+        [infa, infb] = panelinf(xs(j), ys(j), xs(j+1), ys(j+1), xs(i), ys(i));
+        psip(i, j) = psip(i, j) + infa;
+        psip(i, j+1) = infb;
     end
 end
 
 lhsmat = zeros(np+1, np+1);
 
-for i = 1:(np-1)
-    for j = 1:(np+1)
-        lhsmat(i, j) = psip(i+1, j) - psip(i, j);
-    end
-end
-
-lhsmat = lhsmat(1:np-1, 2:np);
+lhsmat(1,1) = 1;
+lhsmat(2:np,:) = psip(2:np,:) - psip(1:(np-1),:);
+lhsmat(np+1,np+1) = 1;
 
 end

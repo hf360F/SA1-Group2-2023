@@ -11,7 +11,7 @@ nx = 101; ny = 81; % Discretisation
 np = 100; % Panel discretisation
 theta = (0:np)*2*pi/np; % Angles
 xs = cos(theta); ys = sin(theta); % Points on unit circle 
-alpha = 0;
+alpha = pi/20;
 
 A = build_lhs(xs, ys);
 b = build_rhs(xs, ys, alpha);
