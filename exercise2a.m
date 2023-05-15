@@ -26,4 +26,6 @@ axis("equal")
 figure(2);
 contour(xm, ym, b, c);
 axis("equal")
+xlabel("x")
+ylabel("y")
 

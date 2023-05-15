@@ -40,3 +40,5 @@ axis("equal")
 figure(2);
 contour(xm, ym, psib, c);
 axis("equal")
+xlabel("x")
+ylabel("y")

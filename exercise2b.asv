@@ -25,4 +25,6 @@ contour(xm, ym, psa, c);
 
 figure(2);
 contour(xm, ym, b, c);
+xlabel("x")
+ylabel("y")
 

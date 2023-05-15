@@ -18,8 +18,6 @@ b = build_rhs(xs, ys, alpha);
 
 gam = A\b;
 
-%gam = vertcat(vertcat(0, gamma1), 0);
-
 delta = ((xs(2) - xs(1))^2 + (ys(2) - ys(1))^2)^(1/2);
 
 for i = 1:nx
@@ -42,11 +40,15 @@ c = -1.75:0.25:1.75;
 contour(xm, ym, psi, c);
 hold on
 axis("equal")
+xlabel("x")
+ylabel("y")
 plot(xs, ys)
 hold off
 
 figure(2);
 plot(theta/pi, gam)
+xlabel("Angle around cylinder /pi, radians")
+ylabel("Vortex sheet strength")
 
 totalCirc = 0;
 for n = 1:(np-1)
