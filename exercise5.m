@@ -5,7 +5,7 @@ close all;
 
 % Domain
 xmin = -2.5; xmax = 2.5; ymin = -2; ymax = 2;
-nx = 101; ny = 81; % Discretisation
+nx = 51; ny = 41; % Discretisation
 
 % Cylinder
 np = 100; % Panel discretisation
