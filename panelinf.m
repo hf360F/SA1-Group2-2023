@@ -18,7 +18,7 @@ X = dot(r,t);
 Y = dot(r,n);
 
 % Length of vortex sheet from end co-ordinates
-delta = ((xb - xa)^2 + (yb - ya)^2)^(1/2);
+delta = power(power((xb - xa),2) + power((yb - ya),2),(1/2));
 
 [infa, infb] = refpaninf(delta, X, Y);
 

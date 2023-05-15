@@ -8,11 +8,14 @@ np = length(xs) - 1;
 
 rhsmat = zeros(np+1, 1);
 
-for i = 1:(np)%%%%
-    rhsmat(i) = (ys(i))*cos(alpha) - (xs(i))*sin(alpha);
+for i = 1:(np-1)%%%%
+    rhsmat(i+1) = (ys(i) - ys(i+1))*cos(alpha) - (xs(i) - xs(i+1))*sin(alpha);
 end
 
-rhsmat(1) = (ys(np+1) - ys(1))*cos(alpha) - (xs(np+1) - xs(i))*sin(alpha);
+rhsmat(2:np,:) = (ys(1:np-1,:) - ys(2:np,:)
+
+lhsmat(2:np,:) = psip(2:np,:) - psip(1:(np-1),:);
+
 %rhsmat = rhsmat(1:np-1);
 
 end

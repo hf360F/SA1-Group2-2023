@@ -8,7 +8,7 @@ xmin = -2.5; xmax = 2.5; ymin = -2; ymax = 2;
 nx = 101; ny = 81; % Discretisation
 
 % Cylinder
-np = 100; % Panel discretisation
+np = 1000; % Panel discretisation
 theta = (0:np)*2*pi/np; % Angles
 xs = cos(theta); ys = sin(theta); % Points on unit circle 
 alpha = 0;
