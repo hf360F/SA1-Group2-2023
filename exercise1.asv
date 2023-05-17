@@ -1,0 +1,24 @@
+% Test of ueintbit.m
+
+ReL = 2500;
+
+nx = 101;
+
+ue = linspace(1, 1, nx);
+x = linspace(0, 1, nx);
+theta = zeros(nx-1);
+thetaBlas = zeros(nx-1);
+
+intTot = 0;
+
+for i = 1:(length(x)-1)
+    ua = ue(i);
+    ub = ue(i+1);
+    intTot = intTot + ueintbit(x(i), ue(i), x(i+1), ue(i+1));
+    theta(i) = (0.45*(ue(i)^(-6))*intTot/ReL)^(0.5);
+    thetaBlas(i) = 0.664*(x(i)^0.5)/(ReL^(0.5));
+end
+
+plot(x, theta)
+hold on
+plot(x, thetaBlas)
