@@ -1,24 +1,32 @@
-% Streamfunction of single line vortex
+% Test of ueintbit.m with constant ue
 
-clear;
-close all;
+ReL = 2500;
+L = 1;
 
-xmin = -2.5; xmax = 2.5; ymin = -2.5; ymax = 2.5; % Domain
-xc = 0.75; yc = 0.50; % Line vortex co-ordinates
-Gamma = 3.0; % Line vortex strength
-nx = 51; ny = 41; % Domain discretisation
+nx = 101;
 
-for i = 1:nx
-    for j = 1:ny
-        xm(i,j) = xmin + (i-1)*(xmax-xmin)/(nx-1);
-        ym(i,j) = ymin + (j-1)*(ymax-ymin)/(ny-1);
-        psi(i,j) = psipv(xc,yc,Gamma,xm(i,j),ym(i,j));
-    end
+ue = linspace(1, 1, nx);
+x = linspace(0, 1, nx);
+theta = zeros(nx, 1);
+thetaBlas = zeros(nx, 1);
+
+intTot = 0;
+
+for i = 1:(length(x)-1)
+    ua = ue(i);
+    ub = ue(i+1);
+    xa = x(i);
+    xb = x(i+1);
+
+    intTot = intTot + ueintbit(xa, ua, xb, ub);
+    theta(i) = L*(0.45*(ue(i)^(-6))*intTot/ReL)^(0.5);
+    thetaBlas(i) = L*0.664*(xa^0.5)/(ReL^(0.5));
 end
 
-% Streamfunction contours (streamlines)
-c = -0.4:0.2:1.2;
-contour(xm, ym, psi, c);
-axis("equal")
-xlabel("x")
-ylabel("y")
+
+plot(x/L, theta/L)
+hold on
+plot(x/L, thetaBlas/L)
+xlabel("x/L")
+ylabel("theta/L")
+legend("Thwaites", "Blasius")
