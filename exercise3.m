@@ -1,14 +1,14 @@
-% Test of ueintbit.m with constant ue
+% Test of laminar boundary layer with separation or transition
 
 clear;
 close all;
 
-ReL = 1E8;
+ReL = 3.2E5;
 L = 1;
 
 nx = 101;
 
-ue = linspace(1, 1-0.2, nx);
+ue = linspace(1, 0.5, nx);
 x = linspace(0, 1/L, nx);
 theta = zeros(nx, 1);
 thetaBlas = zeros(nx, 1);
@@ -17,6 +17,9 @@ ReTheta = zeros(nx, 1);
 intTot = 0;
 i = 1;
 laminar = true;
+
+int = 0;
+ils = 0;
 
 while laminar && i < (nx-1)
     i = i + 1;
@@ -41,7 +44,20 @@ while laminar && i < (nx-1)
     if log(ReTheta(i)) >= 18.4*He - 21.74
         laminar = false;
         disp([xa ReTheta(i)/1000])
+        int = i;
+
+    elseif m >= 0.9
+        laminar = false;
+        ils = i;
     end
+end
+
+if int ~= 0
+    disp(['Natural transition at ' num2str(x(int)) ' with Rethet ' num2str(ReTheta(int))])
+end
+
+if ils ~= 0
+    disp(['Separation at ' num2str(x(ils)) ' with Rethet ' num2str(ReTheta(ils))])
 end
 
 plot(x, theta)

@@ -1,7 +1,6 @@
 % Test of ueintbit.m with constant ue
 
 ReL = 2500;
-L = 1;
 
 nx = 101;
 
@@ -19,14 +18,13 @@ for i = 1:(length(x)-1)
     xb = x(i+1);
 
     intTot = intTot + ueintbit(xa, ua, xb, ub);
-    theta(i) = L*(0.45*(ue(i)^(-6))*intTot/ReL)^(0.5);
-    thetaBlas(i) = L*0.664*(xa^0.5)/(ReL^(0.5));
+    theta(i) = (0.45*(ue(i)^(-6))*intTot/ReL)^(0.5);
+    thetaBlas(i) = 0.664*(xa^0.5)/(ReL^(0.5));
 end
 
-
-plot(x/L, theta/L)
+plot(x(1:nx-1), theta(1:nx-1))
 hold on
-plot(x/L, thetaBlas/L)
+plot(x(1:nx-1), thetaBlas(1:nx-1))
 xlabel("x/L")
 ylabel("theta/L")
 legend("Thwaites", "Blasius")
