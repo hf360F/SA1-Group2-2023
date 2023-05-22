@@ -17,15 +17,15 @@ end
 
 lhsmat = zeros(np+1, np+1);
 
-lhsmat(1,2) = 1;
-lhsmat(1,3) = -0.5;
+lhsmat(1,2) = 0.5;
+%lhsmat(1,3) = -0.5;
+%lhsmat(1,np-1) = -0.5;
 lhsmat(1,np-1) = -0.5;
-lhsmat(1,np) = 1;
 
-lhsmat(np+1,2) = 1;
-lhsmat(np+1,3) = -0.5;
-lhsmat(np+1,np-1) = -0.5;
-lhsmat(np+1,np) = 1;
+lhsmat(np+1,1) = 0.5;
+%lhsmat(np+1,3) = -0.5;
+%lhsmat(np+1,np-1) = -0.5;
+lhsmat(np+1,np) = 0.5;
 
 lhsmat(2:np,:) = psip(2:np,:) - psip(1:(np-1),:);
 lhsmat(np+1,np+1) = 1;

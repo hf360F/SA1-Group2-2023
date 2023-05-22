@@ -2,8 +2,11 @@
 %  calculation.  To alter incidence, edit 'alpha' below.  To alter
 %  Van de Vooren geometry parameters, see vdvfoil.m.
 
+close all
+clear
+
 %  free-stream incidence
-alpha = pi/12;
+alpha = 0;
 
 %  Van de Vooren geometry and pressure distribution
 npin = 2000;
@@ -55,6 +58,8 @@ np = 800;
 
 A = build_lhs ( xs, ys );
 b = build_rhs ( xs, ys, alpha );
+
+Ainv = inv(A);
 
 gams = inv(A) * b;
 xs8 = xs;
