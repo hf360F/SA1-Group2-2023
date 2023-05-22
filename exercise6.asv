@@ -1,11 +1,14 @@
-% Test of ueintbit.m with constant ue
+% Test of laminar boundary layer with separation or transition
 
-ReL = 1E8;
+clear;
+close all;
+
+ReL = 3.2E5;
 L = 1;
 
 nx = 101;
 
-ue = linspace(1, 1+0.2, nx);
+ue = linspace(1, 0.5, nx);
 x = linspace(0, 1/L, nx);
 theta = zeros(nx, 1);
 thetaBlas = zeros(nx, 1);
@@ -17,6 +20,11 @@ laminar = true;
 
 int = 0;
 ils = 0;
+itr = 0;
+its = 0;
+
+He = zeros(nx,1);
+He(0) = 1.57258;
 
 while laminar && i < (nx-1)
     i = i + 1;
@@ -46,10 +54,31 @@ while laminar && i < (nx-1)
     elseif m >= 0.9
         laminar = false;
         ils = i;
+        He(i) = 1.51509;
     end
 end
 
-id 
+delta = times(He, theta);
+
+
+while its == 0 && i < nx
+    i = i+1;
+    [delx, thickhist] = ode45(@thickdash,[0,x(i)-x(i-1)],thick0);
+    theta = thickhist(:,1);
+    delta = thickhist(:,2);
+    He = delta./theta;
+    if He < 1.46 && its == 0
+        its = i;
+    if He > 1.58 && itr == 0
+        itr = i;
+
+if int ~= 0
+    disp(['Natural transition at ' num2str(x(int)) ' with Rethet ' num2str(ReTheta(int))])
+end
+
+if ils ~= 0
+    disp(['Separation at ' num2str(x(ils)) ' with Rethet ' num2str(ReTheta(ils))])
+end
 
 plot(x, theta)
 hold on

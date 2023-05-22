@@ -5,9 +5,9 @@ close all;
 
 global ReL ue0 duedx;
 
-ReL = 1E7;
+ReL = 1E8;
 ue0 = 1;
-duedx = 0;
+duedx = -0.5;
 
 x0 = 0.01;
 thick0(1) = 0.037*x0*(ReL*x0)^(-1/5);
@@ -19,19 +19,19 @@ theta = thickhist(:,1);
 theta7 = 0.037*times(delx,power(ReL*delx, -1/5));
 theta9 = 0.023*times(delx,power(ReL*delx, -1/6));
 
-He = thickhist(:,2)/theta;
+delta = thickhist(:,2);
+He = delta./theta;
 
 for i =1:length(delx)
-    if He(i) > 1.46
+    if He(i) < 1.46
         delx(i)
         break
     end
 end
 
-%plot(delx, theta)
-%hold on
 plot(delx, He)
-yline(1.46)
+hold on
+plot(delx, delta)
 xlabel("x/L")
-ylabel("theta")
-legend("\theta", "\He")
+ylabel("Dimensionless thickness")
+legend("theta","delta")
