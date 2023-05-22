@@ -1,14 +1,14 @@
-% Test of laminar boundary layer with separation or transition
+% Test of ueintbit.m with constant ue
 
 clear;
 close all;
 
-ReL = 3.2E5;
+ReL = 1E6;
 L = 1;
 
 nx = 101;
 
-ue = linspace(1, 0.5, nx);
+ue = linspace(1, 1-0.25, nx);
 x = linspace(0, 1/L, nx);
 theta = zeros(nx, 1);
 thetaBlas = zeros(nx, 1);
@@ -17,9 +17,6 @@ ReTheta = zeros(nx, 1);
 intTot = 0;
 i = 1;
 laminar = true;
-
-int = 0;
-ils = 0;
 
 while laminar && i < (nx-1)
     i = i + 1;
@@ -37,27 +34,14 @@ while laminar && i < (nx-1)
     ReTheta(i) = ReL*ua*theta(i);
 
     % Find energy shape factor from Thwaites gradient factor
-    m = -ReL*(theta(i)/L)^2*(ub-ua)/(xb-xa);
+    m = -ReL*(theta(i))^2*(ub-ua)/(xb-xa);
     H = thwaites_lookup(m);
     He = laminar_He(H);
     
     if log(ReTheta(i)) >= 18.4*He - 21.74
         laminar = false;
         disp([xa ReTheta(i)/1000])
-        int = i;
-
-    elseif m >= 0.9
-        laminar = false;
-        ils = i;
     end
-end
-
-if int ~= 0
-    disp(['Natural transition at ' num2str(x(int)) ' with Rethet ' num2str(ReTheta(int))])
-end
-
-if ils ~= 0
-    disp(['Separation at ' num2str(x(ils)) ' with Rethet ' num2str(ReTheta(ils))])
 end
 
 plot(x, theta)

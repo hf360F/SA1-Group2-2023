@@ -1,7 +1,8 @@
 function dthickdx = thickdash(xmx0, thick)
    global ReL ue0 duedx;
    
-   ReTheta = ReL * ue0 * thick(1);
+   ue = ue0 - duedx*xmx0;
+   ReTheta = ReL * ue * thick(1);
    He = thick(2)/thick(1);
    
    if He >= 1.46
@@ -14,7 +15,7 @@ function dthickdx = thickdash(xmx0, thick)
    cdiss = 0.010023*((H - 1)*ReTheta)^(-1/6);
 
     dthickdx = zeros(2, 1);
-    dthickdx(1) = cf/2 - (H+2)/ue0 * duedx * thick(1);
-    dthickdx(2) = cdiss - 3/ue0 * duedx * thick(2);
+    dthickdx(1) = cf/2 - (H+2)/ue * duedx * thick(1);
+    dthickdx(2) = cdiss - 3/ue * duedx * thick(2);
 
 end
