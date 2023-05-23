@@ -1,4 +1,4 @@
-% Test of ueintbit.m with constant ue
+% Test of ueintbit.m with varying ue and test for transition
 
 clear;
 close all;
@@ -38,6 +38,7 @@ while laminar && i < (nx-1)
     H = thwaites_lookup(m);
     He = laminar_He(H);
     
+    % Test for transition
     if log(ReTheta(i)) >= 18.4*He - 21.74
         laminar = false;
         disp([xa ReTheta(i)/1000])

@@ -3,12 +3,12 @@
 clear;
 close all;
 
-ReL = 1E6;
+ReL = 1.8E6;
 L = 1;
 
 nx = 101;
 
-ue = linspace(1, 1-0.25, nx);
+ue = linspace(1, 1-0.5, nx);
 x = linspace(0, 1/L, nx);
 theta = zeros(nx, 1);
 thetaBlas = zeros(nx, 1);
@@ -41,12 +41,14 @@ while laminar && i < (nx-1)
     H = thwaites_lookup(m);
     He = laminar_He(H);
     
+    % Test for transition
     if log(ReTheta(i)) >= 18.4*He - 21.74
         laminar = false;
         disp([xa ReTheta(i)/1000])
         int = i;
 
-    elseif m >= 0.9
+    % Test for separation
+    elseif m >= 0.09
         laminar = false;
         ils = i;
     end

@@ -13,8 +13,11 @@ x0 = 0.01;
 thick0(1) = 0.037*x0*(ReL*x0)^(-1/5);
 thick0(2) = 1.80*thick0(1);
 
+%history of thick at corresponding x values
 [delx, thickhist] = ode45(@thickdash,[0 0.99],thick0);
+delx = delx + x0;
 
+%power law estimates for theta
 theta = thickhist(:,1);
 theta7 = 0.037*times(delx,power(ReL*delx, -1/5));
 theta9 = 0.023*times(delx,power(ReL*delx, -1/6));
@@ -25,5 +28,5 @@ plot(delx, theta7)
 hold on
 plot(delx, theta9)
 xlabel("x/L")
-ylabel("theta")
+ylabel("\theta/L")
 legend("\theta", "\theta_7", "\theta_9")

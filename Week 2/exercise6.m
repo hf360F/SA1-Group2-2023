@@ -5,9 +5,9 @@ clear;
 
 global ReL ue0 duedx;
 
-ReL = 1E5;
+ReL = 1E6;
 ue0 = 1;
-duedx = -0.385;
+duedx = -0.25;
 
 L = 1;
 
@@ -31,20 +31,20 @@ its = 0;
 He = zeros(nx,1);
 He(1) = 1.57258;
 
-while laminar && i < (nx-1)
+while laminar && i < (nx)
     i = i + 1;
 
-    ua = ue(i);
-    ub = ue(i+1);
-    xa = x(i);
-    xb = x(i+1);
+    ua = ue(i-1);
+    ub = ue(i);
+    xa = x(i-1);
+    xb = x(i);
 
     % Momentum thickness by Blasius, Thwaites
     intTot = intTot + ueintbit(xa, ua, xb, ub); % Euler for Thwaites integral
-    theta(i) = (0.45*(ua^(-6))*intTot/ReL)^(0.5);
-    thetaBlas(i) = 0.664*(xa^0.5)/(ReL^(0.5));
+    theta(i) = sqrt((0.45*(ub^(-6))*intTot/ReL));
+    %thetaBlas(i) = 0.664*(xa^0.5)/(ReL^(0.5));
 
-    ReTheta(i) = ReL*ua*theta(i);
+    ReTheta(i) = ReL*ub*theta(i);
 
     % Find energy shape factor from Thwaites gradient factor
     m = -ReL*(theta(i))^2*(ub-ua)/(xb-xa);
@@ -82,7 +82,7 @@ while its == 0 && i < (nx)
     end
 end
 
-while i < (nx-1)
+while i < (nx)
     i = i +1;
     He(i) = He(its);
     uea = ue0 + duedx*i/nx;
@@ -108,14 +108,14 @@ if its ~= 0
 end
 
 figure(1)
-plot(x(1:nx-1), theta(1:nx-1))
+plot(x(1:nx), theta(1:nx))
 xlabel("x/L")
 ylabel("\theta/L")
 legend("Re = 1E4", "Re = 1E5", "Re = 1E6")
 hold on;
 
 figure(2)
-plot(x(1:nx-1), He(1:nx-1))
+plot(x(1:nx), He(1:nx))
 xlabel("x/L")
 ylabel("H_E")
 legend("Re = 1E4", "Re = 1E5", "Re = 1E6")
