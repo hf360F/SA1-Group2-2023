@@ -5,9 +5,9 @@ clear;
 
 global ReL ue0 duedx;
 
-ReL = 1E6;
+ReL = 1E5;
 ue0 = 1;
-duedx = -0.25;
+duedx = -0.124;
 
 L = 1;
 
@@ -93,30 +93,59 @@ end
 
 if int ~= 0
     disp(['Natural transition at ' num2str(x(int)) ' with Rethet ' num2str(ReTheta(int))])
+    % figure(1)
+    % plot(x(int), theta(int), "x")
+    % legend("Natural transition")
+    % hold on;
+    % figure(2)
+    % plot(x(int), He(int), "x")
+    % legend("Natural transition")
+    % hold on;
 end
 
 if ils ~= 0
     disp(['Laminar separation at ' num2str(x(ils)) ' with Rethet ' num2str(ReTheta(ils))])
+    % figure(1)
+    % plot(x(ils), theta(ils), "o")
+    % legend("Laminar separation")
+    % hold on;
+    % figure(2)
+    % plot(x(ils), He(ils), "o")
+    % legend("Laminar separation")
+    % hold on;
 end
 
 if itr ~= 0
     disp(['Turbulent reattachment at ' num2str(x(itr))])
+    % figure(1)
+    % plot(x(itr), theta(itr), "+")
+    % legend("Turbulent reattachment")
+    % hold on;
+    % figure(2)
+    % plot(x(itr), He(itr), "+")
+    % hold on;
 end
 
 if its ~= 0
     disp(['Turbulent separation at ' num2str(x(its))])
+    % figure(1)
+    % plot(x(its), theta(its), "*")
+    % hold on;
+    % figure(2)
+    % plot(x(its), He(its), "*")
+    % hold on;
 end
 
-figure(1)
-plot(x(1:nx), theta(1:nx))
-xlabel("x/L")
-ylabel("\theta/L")
-legend("Re = 1E4", "Re = 1E5", "Re = 1E6")
-hold on;
-
-figure(2)
-plot(x(1:nx), He(1:nx))
-xlabel("x/L")
-ylabel("H_E")
-legend("Re = 1E4", "Re = 1E5", "Re = 1E6")
-hold on;
+% figure(1)
+% plot(x(1:nx), theta(1:nx))
+% xlabel("x/L")
+% ylabel("\theta/L")
+% legend("Laminar separation", "Turbulent separation", "Re = 1E4", "Laminar separation", "Turbulent reattachment", "Re = 1E5", "Natural transition", "Re = 1E6")
+% hold on;
+% 
+% figure(2)
+% plot(x(1:nx), He(1:nx))
+% xlabel("x/L")
+% ylabel("H_E")
+% legend("Laminar separation", "Turbulent separation", "Re = 1E4", "Laminar separation", "Turbulent reattachment", "Re = 1E5", "Natural transition", "Re = 1E6")
+% hold on;
