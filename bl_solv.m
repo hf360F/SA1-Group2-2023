@@ -1,18 +1,14 @@
 function [int ils itr its delstar theta] = bl_solv(x, cp)
-global ReL ue0;
+global ReL
 
 nx = length(x);
 np = nx;
 
-ReL = 1E5;
-ue0 = 1;
-
-x = [0, x];
 ue = zeros(nx, 1);
 duedx = zeros(nx, 1);
 delstar = zeros(nx, 1);
 theta = zeros(nx, 1);
-thetaBlas = zeros(nx, 1);
+delta = zeros(nx, 1);
 ReTheta = zeros(nx, 1);
 He = zeros(nx,1);
 He(1) = 1.57258;
@@ -35,34 +31,30 @@ xb = x(1);
 intTot = ueintbit(xa, ua, xb, ub); % Euler for Thwaites integral
 theta(1) = (0.45*(ua^(-6))*intTot/ReL)^(0.5);
 
-m1 = -ReL*(theta(1))^2*(ub-ua)/(xb-xa);
-H1 = thwaites_lookup(m1);
+m = -ReL*(theta(1))^2*(ub-ua)/(xb-xa);
+H = thwaites_lookup(m);
 
-delstar(1) = theta(1)*H1;
+delstar(1) = theta(1)*H;
 
 while laminar && i < (nx-1)
     i = i + 1;
 
-    ua = sqrt(1 - cp(i));
-    ub = sqrt(1 - cp(i+1));
-    xa = x(i);
-    xb = x(i+1);
+    ua = sqrt(1 - cp(i-1));
+    ub = sqrt(1 - cp(i));
+    xa = x(i-1);
+    xb = x(i);
 
     duedx(i) = (ub - ua)/(xb - xa);
 
     % Momentum thickness by Blasius, Thwaites
     intTot = intTot + ueintbit(xa, ua, xb, ub); % Euler for Thwaites integral
     theta(i) = (0.45*(ua^(-6))*intTot/ReL)^(0.5);
-    thetaBlas(i) = 0.664*(xa^0.5)/(ReL^(0.5));
-
-    ReTheta(i) = ReL*ua*theta(i);
 
     % Find energy shape factor from Thwaites gradient factor
     m = -ReL*(theta(i))^2*(ub-ua)/(xb-xa);
     H = thwaites_lookup(m);
 
     delstar(i) = H*theta(i);
-
     He(i) = laminar_He(H);
     
     if log(ReTheta(i)) >= 18.4*He(i) - 21.74
@@ -76,17 +68,31 @@ while laminar && i < (nx-1)
     end
 end
 
-delta = He.*theta;
+delta(i) = He(i)*theta(i);
 
 while its == 0 && i < (nx)
     i = i+1;
+    
+    ua = sqrt(1 - cp(i-1));
+    ub = sqrt(1 - cp(i));
+    xa = x(i-1);
+    xb = x(i);
+
     thick0(1) = theta(i-1);
     thick0(2) = delta(i-1);
-    ue0 = ue(i-1);
-    [delx, thickhist] = ode45(@thickdash,[0,x(i)-x(i-1)],thick0);
+    
+    ue0 = ub;
+    ue0
+    duedx = (ub - ua)/(xb - xa);
+
+    [delx, thickhist] = ode45(@thickdash,[0,xb-xa],thick0);
     theta(i) = thickhist(end,1);
     delta(i) = thickhist(end,2);
     He(i) = delta(i)/theta(i);
+
+    m = -ReL*(theta(i))^2*(ub-ua)/(xb-xa);
+    H = thwaites_lookup(m);
+    delstar(i) = theta(i)*H;
 
     if He(i) < 1.46
         its = i;
@@ -99,8 +105,12 @@ end
 while i < (nx-1)
     i = i +1;
     He(i) = He(its);
-    uea = ue0 + duedx*i/nx;
-    ueb = uea + duedx/nx;
+    
+    uea = sqrt(1 - cp(i-1));
+    ueb = sqrt(1 - cp(i));
 
     theta(i) = theta(i-1)*(uea/ueb)^(He(i)+2);
+    m = -ReL*(theta(i))^2*(ub-ua)/(xb-xa);
+    H = thwaites_lookup(m);
+    delstar(i) = theta(i)*H;
 end

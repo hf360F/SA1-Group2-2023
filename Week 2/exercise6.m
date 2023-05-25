@@ -7,7 +7,7 @@ global ReL ue0 duedx;
 
 ReL = 1E5;
 ue0 = 1;
-duedx = -0.124;
+duedx = -0.5;
 
 L = 1;
 
@@ -83,9 +83,9 @@ while its == 0 && i < (nx)
 end
 
 while i < (nx)
-    i = i +1;
+    i = i + 1;
     He(i) = He(its);
-    uea = ue0 + duedx*i/nx;
+    uea = ue0 + duedx*(i-2)/nx;
     ueb = uea + duedx/nx;
 
     theta(i) = theta(i-1)*(uea/ueb)^(He(i)+2);
