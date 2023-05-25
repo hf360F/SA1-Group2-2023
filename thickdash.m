@@ -1,9 +1,9 @@
 function dthickdx = thickdash(xmx0, thick)
-   global ReL ue0 duedx;
+   global Re ue0 duedx
    
    %dimensionless boundary layer edge velocity at given x
    ue = ue0 + duedx*xmx0;
-   ReTheta = ReL * ue * thick(1);
+   ReTheta = Re * ue * thick(1);
    %He = deltae/theta is energy shape factor
    He = thick(2)/thick(1);
    
@@ -21,8 +21,6 @@ function dthickdx = thickdash(xmx0, thick)
 
    %from momentum and energy integral equations
    dthickdx = zeros(2, 1);
-   H
-   ue
    dthickdx(1) = cf/2 - (H+2)/ue * duedx * thick(1);
    dthickdx(2) = cdiss - 3/ue * duedx * thick(2);
 

@@ -1,11 +1,14 @@
 function [int ils itr its delstar theta] = bl_solv(x, cp)
-global ReL
+global Re ue0 duedx;
+
+ue0 = 1;
+duedx = 0;
 
 nx = length(x);
 np = nx;
 
 ue = zeros(nx, 1);
-duedx = zeros(nx, 1);
+%duedx = zeros(nx, 1);
 delstar = zeros(nx, 1);
 theta = zeros(nx, 1);
 delta = zeros(nx, 1);
@@ -29,9 +32,9 @@ xa = 0;
 xb = x(1);
 
 intTot = ueintbit(xa, ua, xb, ub); % Euler for Thwaites integral
-theta(1) = (0.45*(ua^(-6))*intTot/ReL)^(0.5);
+theta(1) = (0.45*(ub^(-6))*intTot/Re)^(0.5);
 
-m = -ReL*(theta(1))^2*(ub-ua)/(xb-xa);
+m = -Re*(theta(1))^2*(ub-ua)/(xb-xa);
 H = thwaites_lookup(m);
 
 delstar(1) = theta(1)*H;
@@ -44,15 +47,16 @@ while laminar && i < (nx-1)
     xa = x(i-1);
     xb = x(i);
 
-    duedx(i) = (ub - ua)/(xb - xa);
+    duedx = (ub - ua)/(xb - xa);
 
     % Momentum thickness by Blasius, Thwaites
     intTot = intTot + ueintbit(xa, ua, xb, ub); % Euler for Thwaites integral
-    theta(i) = (0.45*(ua^(-6))*intTot/ReL)^(0.5);
+    theta(i) = (0.45*(ub^(-6))*intTot/Re)^(0.5);
 
     % Find energy shape factor from Thwaites gradient factor
-    m = -ReL*(theta(i))^2*(ub-ua)/(xb-xa);
+    m = -Re*(theta(i))^2*(ub-ua)/(xb-xa);
     H = thwaites_lookup(m);
+    ReTheta(i) = Re*ub*theta(i);
 
     delstar(i) = H*theta(i);
     He(i) = laminar_He(H);
@@ -81,8 +85,7 @@ while its == 0 && i < (nx)
     thick0(1) = theta(i-1);
     thick0(2) = delta(i-1);
     
-    ue0 = ub;
-    ue0
+    ue0 = ua;
     duedx = (ub - ua)/(xb - xa);
 
     [delx, thickhist] = ode45(@thickdash,[0,xb-xa],thick0);
@@ -90,9 +93,12 @@ while its == 0 && i < (nx)
     delta(i) = thickhist(end,2);
     He(i) = delta(i)/theta(i);
 
-    m = -ReL*(theta(i))^2*(ub-ua)/(xb-xa);
-    H = thwaites_lookup(m);
-    delstar(i) = theta(i)*H;
+    if He(i) >= 1.46
+        H = (11*He(i) + 15)/(48*He(i) - 59);
+    else
+        H = 2.803;
+    end
+    delstar(i) = H*theta(i);
 
     if He(i) < 1.46
         its = i;
@@ -102,15 +108,14 @@ while its == 0 && i < (nx)
     end
 end
 
-while i < (nx-1)
+while i < (nx)
     i = i +1;
     He(i) = He(its);
     
     uea = sqrt(1 - cp(i-1));
     ueb = sqrt(1 - cp(i));
 
-    theta(i) = theta(i-1)*(uea/ueb)^(He(i)+2);
-    m = -ReL*(theta(i))^2*(ub-ua)/(xb-xa);
-    H = thwaites_lookup(m);
+    H = 2.803;
+    theta(i) = theta(i-1)*(uea/ueb)^(H+2);
     delstar(i) = theta(i)*H;
 end
