@@ -6,7 +6,7 @@ close all
 clear
 
 %  free-stream incidence
-alpha = 0;
+alpha = pi/12;
 
 %  Van de Vooren geometry and pressure distribution
 npin = 2000;
@@ -74,12 +74,16 @@ legend('exact','100pans','200pans','400pans','800pans')
 
 figure(3)
 plot(xsin,-cpex,xs1,-cp1,'--')
+title("100")
 
 figure(4)
 plot(xsin,-cpex,xs2,-cp2,'--')
+title("200")
 
 figure(5)
 plot(xsin,-cpex,xs4,-cp4,'--')
+title("400")
 
 figure(6)
 plot(xsin,-cpex,xs8,-cp8,'--')
+title("800")
