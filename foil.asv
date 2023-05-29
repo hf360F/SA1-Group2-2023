@@ -16,7 +16,7 @@ fprintf(1, '%s\n\n', ['Reading in parameter file: ' parfile])
 par_read(parfile)
 [section np Re alpha] = par_read(parfile);
 
-alphaSave = 3;
+alphaSave = 5;
 
 %  Read in the section geometry
 secfile = ['Geometry/' section '.surf'];
@@ -202,9 +202,7 @@ figure(4)
 plot(alpha, clswp./cdswp)
 
 figure(5)
-ax = axes
-plot(suSave, cpuSave)
+plot(suSave, -cpuSave)
 hold on
-plot(slSave, cplSave)
-set(ax, 'Ydir', 'reverse')
+plot(slSave,cplSave)
 legend("upper", "lower")

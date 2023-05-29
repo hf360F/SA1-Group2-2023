@@ -2,3 +2,4 @@ Section identifier              : design
 Number of panels                : 100
 Reynolds number                 : 0.5e6
 Range of incidences (degrees)   : -10:0.5:20
+Incidence to save cp (degrees)  : 5
