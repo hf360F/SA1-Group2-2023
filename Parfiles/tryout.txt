@@ -1,4 +1,4 @@
-Section identifier              : design
-Number of panels                : 100
+Section identifier              : 4412topthinplate
+Number of panels                : 800
 Reynolds number                 : 0.5e6
-Range of incidences (degrees)   : -10:0.5:20
+Range of incidences (degrees)   : 0:0.5:20

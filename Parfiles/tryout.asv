@@ -1,5 +1,4 @@
-Section identifier              : design
-Number of panels                : 100
+Section identifier              : flap
+Number of panels                : 00
 Reynolds number                 : 0.5e6
-Range of incidences (degrees)   : -10:0.5:20
-Incidence to save cp (degrees)  : 5
+Range of incidences (degrees)   : 0:0.5:20

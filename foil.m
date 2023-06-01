@@ -169,7 +169,7 @@ for nalpha = 1:length(alpha)
          'sl', 'delstarl', 'thetal', 'lowerbl', ...
          'su', 'delstaru', 'thetau', 'upperbl' )
   
-  if nalpha == alphaSave
+  if alpha(nalpha) == alphaSave
       cplSave = cpl;
       slSave = sl;
       cpuSave = cpu;
@@ -186,20 +186,23 @@ save ( fname, 'xs', 'ys', 'alpha', 'clswp', 'cdswp', 'lovdswp' )
 plot(alpha, clswp)
 xlabel("\alpha")
 ylabel("Cl")
+title("Cl")
 
 figure(2)
 plot(clswp, cdswp)
 xlabel("Cl")
 ylabel("Cd")
+title("Cl-Cd")
 
 figure(3)
 plot(alpha, cdswp)
 xlabel("\alpha")
 ylabel("Cd")
-
+title("Cd")
 
 figure(4)
 plot(alpha, clswp./cdswp)
+title("Cl/Cd")
 
 figure(5)
 ax = axes
@@ -208,3 +211,4 @@ hold on
 plot(slSave, cplSave)
 set(ax, 'Ydir', 'reverse')
 legend("upper", "lower")
+title("Cp at " + string(alphaSave) + " degree")
